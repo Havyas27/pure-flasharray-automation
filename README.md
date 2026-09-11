@@ -71,6 +71,10 @@ approval safeguards for destructive operations.
 5. Capacity and health reporting
 6. Python integrations for CMDB, tickets, notifications, and scheduled reports
 
+The first change playbook is documented in
+[`docs/volume-provisioning.md`](docs/volume-provisioning.md). It defaults to
+preview mode and requires an explicit `apply_changes=true` override.
+
 ## Reference projects
 
 - [Pure Storage Ansible playbook examples](https://github.com/PureStorage-OpenConnect/ansible-playbook-examples)

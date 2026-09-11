@@ -1,0 +1,65 @@
+---
+- name: Provision a FlashArray volume
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - purestorage.flasharray
+
+  vars:
+    # Safety switch: the playbook previews by default and changes nothing.
+    apply_changes: false
+    volume_name: ""
+    volume_size: ""
+
+  pre_tasks:
+    - name: Require a volume name
+      ansible.builtin.assert:
+        that:
+          - volume_name | length > 0
+          - volume_name is match('^[A-Za-z0-9][A-Za-z0-9._-]*$')
+        fail_msg: >-
+          Supply a valid volume_name, for example
+          -e volume_name=app-dev-01.
+
+    - name: Require a valid volume size
+      ansible.builtin.assert:
+        that:
+          - volume_size | length > 0
+          - volume_size is match('^[1-9][0-9]*(M|G|T|P)$')
+        fail_msg: >-
+          Supply volume_size using a positive integer and unit M, G, T, or P,
+          for example -e volume_size=1G.
+
+    - name: Require FlashArray credentials
+      ansible.builtin.assert:
+        that:
+          - lookup('env', 'PUREFA_URL') | length > 0
+          - lookup('env', 'PUREFA_API') | length > 0
+        fail_msg: >-
+          Set PUREFA_URL and PUREFA_API in the environment before running this
+          playbook.
+
+    - name: Show the requested operation
+      ansible.builtin.debug:
+        msg:
+          - "Target volume: {{ volume_name }}"
+          - "Requested size: {{ volume_size }}"
+          - "Changes enabled: {{ apply_changes | bool }}"
+
+  tasks:
+    - name: Create or extend the volume
+      purestorage.flasharray.purefa_volume:
+        name: "{{ volume_name }}"
+        size: "{{ volume_size }}"
+        state: present
+        fa_url: "{{ lookup('env', 'PUREFA_URL') }}"
+        api_token: "{{ lookup('env', 'PUREFA_API') }}"
+      when: apply_changes | bool
+
+    - name: Explain preview mode
+      ansible.builtin.debug:
+        msg: >-
+          Preview complete. No FlashArray changes were made. Re-run with
+          -e apply_changes=true only after reviewing the request.
+      when: not (apply_changes | bool)
