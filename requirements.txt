@@ -1,0 +1,7 @@
+ansible
+purestorage
+py-pure-client
+netaddr
+requests
+pycountry
+urllib3

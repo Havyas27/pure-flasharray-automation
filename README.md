@@ -31,6 +31,10 @@ python -m pip install --upgrade pip ansible
 ansible-galaxy collection install -r requirements.yml
 ```
 
+For the complete laptop setup and testing workflow, see
+[`docs/getting-started.md`](docs/getting-started.md). Keep any lab-specific
+notes in the ignored `docs/*.local.md` files.
+
 Set credentials only in the shell, CI secret store, or a secrets manager:
 
 ```bash

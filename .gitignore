@@ -1,4 +1,5 @@
 .venv/
+.ansible/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -11,6 +12,7 @@ __pycache__/
 *.vault.yaml
 reports/
 *.json
+docs/*.local.md
 
 # Editor and OS files
 .DS_Store
