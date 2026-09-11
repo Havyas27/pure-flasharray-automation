@@ -1,0 +1,36 @@
+---
+- name: Validate FlashArray connectivity and credentials
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - purestorage.flasharray
+
+  tasks:
+    - name: Require the FlashArray management address
+      ansible.builtin.assert:
+        that:
+          - lookup('env', 'PUREFA_URL') | length > 0
+        fail_msg: >-
+          Set PUREFA_URL to the FlashArray management address before running
+          this playbook.
+
+    - name: Require the FlashArray API token
+      ansible.builtin.assert:
+        that:
+          - lookup('env', 'PUREFA_API') | length > 0
+        fail_msg: >-
+          Set PUREFA_API to a suitable FlashArray API token before running
+          this playbook.
+
+    - name: Collect basic FlashArray information
+      purestorage.flasharray.purefa_info:
+        fa_url: "{{ lookup('env', 'PUREFA_URL') }}"
+        api_token: "{{ lookup('env', 'PUREFA_API') }}"
+        gather_subset:
+          - minimum
+      register: flasharray_info
+
+    - name: Report successful connectivity
+      ansible.builtin.debug:
+        msg: "FlashArray API connectivity and authentication succeeded."

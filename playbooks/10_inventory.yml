@@ -1,0 +1,27 @@
+---
+- name: Gather FlashArray inventory
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - purestorage.flasharray
+
+  tasks:
+    - name: Collect configuration and storage inventory
+      purestorage.flasharray.purefa_info:
+        fa_url: "{{ lookup('env', 'PUREFA_URL') }}"
+        api_token: "{{ lookup('env', 'PUREFA_API') }}"
+        gather_subset:
+          - config
+          - capacity
+          - volumes
+          - hosts
+          - hgroups
+          - pgroups
+          - snapshots
+          - pods
+      register: flasharray_info
+
+    - name: Display collected inventory
+      ansible.builtin.debug:
+        var: flasharray_info.purefa_info
