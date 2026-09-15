@@ -5,3 +5,4 @@ netaddr
 requests
 pycountry
 urllib3
+ucsmsdk

@@ -1,3 +1,5 @@
 ---
 collections:
   - name: purestorage.flasharray
+  - name: cisco.ucs
+  - name: cisco.nxos

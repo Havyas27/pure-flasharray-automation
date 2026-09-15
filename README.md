@@ -35,6 +35,10 @@ For the complete laptop setup and testing workflow, see
 [`docs/getting-started.md`](docs/getting-started.md). Keep any lab-specific
 notes in the ignored `docs/*.local.md` files.
 
+The end-to-end UCS, MDS, and FlashArray design is documented in
+[`docs/architecture.md`](docs/architecture.md). Cisco device prerequisites
+are listed in [`docs/cisco-device-prerequisites.md`](docs/cisco-device-prerequisites.md).
+
 Set credentials only in the shell, CI secret store, or a secrets manager:
 
 ```bash
