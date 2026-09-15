@@ -8,7 +8,8 @@ and Pure Storage FlashArray while keeping each platform’s logic modular.
 | Layer | Ansible collection | Typical responsibilities |
 | --- | --- | --- |
 | Cisco UCS Manager | `cisco.ucs` | Organizations, SAN connectivity policies, vHBA templates, VSANs, service profiles, and server associations |
-| Cisco MDS | `cisco.nxos` | VSAN facts, device aliases, zones, zonesets, and controlled zoneset activation |
+| Cisco MDS SAN fabric | `cisco.nxos` | VSAN facts, device aliases, zones, zonesets, and controlled zoneset activation |
+| Cisco Nexus IP fabric | `cisco.nxos` | VLANs, interfaces, port-channels, vPC, VRFs, routing, switch facts, and configuration backups |
 | Pure FlashArray | `purestorage.flasharray` | Volumes, hosts, host groups, protection groups, snapshots, and inventory |
 
 The Cisco UCS collection provides UCS Manager modules such as SAN connectivity,
@@ -52,12 +53,14 @@ playbooks/
   20_create_volume.yml         # Safe volume create/extend
   ucs/                          # UCS Manager playbooks
   mds/                          # MDS/NX-OS playbooks
+  nexus/                        # Nexus/NX-OS playbooks
   workflows/                    # Cross-platform orchestration
 
 roles/
   pure_volume/
   pure_host/
   mds_zoning/
+  nexus_network/
   ucs_san/
 
 docs/
@@ -118,7 +121,9 @@ repository.
 2. Pure host and host-group management
 3. MDS read-only facts and current zoning inventory
 4. MDS zone/zoneset change with review gate
-5. UCS SAN connectivity and vHBA configuration
-6. UCS service-profile association validation
-7. End-to-end storage presentation workflow
-8. Python reporting, drift detection, and ticket integrations
+5. Nexus read-only facts and configuration backup
+6. Nexus VLAN, interface, and vPC automation
+7. UCS SAN connectivity and vHBA configuration
+8. UCS service-profile association validation
+9. End-to-end compute/network/storage workflow
+10. Python reporting, drift detection, and ticket integrations

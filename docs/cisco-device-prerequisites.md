@@ -33,6 +33,22 @@ The current Cisco NX-OS documentation lists support for Cisco MDS platforms;
 the exact module and switch compatibility must be checked against the MDS
 software version before applying configuration.
 
+## Cisco Nexus
+
+Collect locally:
+
+- Nexus management hostname or IP for each switch
+- Connection method: `network_cli` or `httpapi`
+- NX-OS version and switch model
+- Authentication method and a least-privilege account
+- VLAN, interface, port-channel, vPC, VRF, and routing requirements
+- Existing configuration backup and rollback location
+- Whether configuration deployment requires a peer-by-peer sequence
+
+Nexus automation will use the `cisco.nxos` collection. Keep Nexus IP-network
+configuration separate from MDS SAN-zoning workflows even when the switches
+are administered with the same collection.
+
 ## Change controls
 
 Before configuration playbooks are enabled, define:
